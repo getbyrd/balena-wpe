@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: browser-deployment
+    labels:
+        app: wpe-browser
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: wpe-browser
+    template:
+        metadata:
+            labels:
+                app: wpe-browser
+        spec:
+            containers:
+                - name: browser
+                  image: michalbyrd/wpe:latest
+                  env:
+                  - name: WPE_BCMRPI_CURSOR
+                    value: "1"
+                    name: WPE_URL
+                    value: "https://darksky.net/forecast/52.5164,13.3791/ca12/en"
+                  securityContext:
+                      privileged: true
+            nodeSelector:
+                beta.kubernetes.io/arch: arm
+                kubernetes.io/hostname: k3s-alpha
+            volumes:
+                - name: devices
+                  hostPath:
+                      path: /dev
+                      type: Directory
