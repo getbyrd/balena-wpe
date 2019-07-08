@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: browser-deployment
+    name: screen-alpha
     labels:
         app: wpe-browser
 spec:
@@ -21,7 +21,7 @@ spec:
                   - name: WPE_BCMRPI_CURSOR
                     value: "1"
                     name: WPE_URL
-                    value: "https://darksky.net/forecast/52.5164,13.3791/ca12/en"
+                    value: "https://bouncingdvdlogo.com/"
                   securityContext:
                       privileged: true
             nodeSelector:
