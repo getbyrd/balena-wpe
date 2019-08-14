@@ -23,5 +23,5 @@ export XDG_RUNTIME_DIR=/tmp/balena/xdg_runtime
 export WPE_BCMRPI_CURSOR=1
 
 # Start browser
-cog $WPE_URL
+cog --cookie-jar=sqlite:/tmp/balena/cookies.sqlite $WPE_URL
 
