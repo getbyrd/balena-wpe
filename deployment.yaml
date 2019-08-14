@@ -2,104 +2,143 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: screen-alpha
-    labels:
-        app: wpe-browser
+  name: screen-alpha
+  labels:
+    app: wpe-browser
 spec:
-    replicas: 1
-    selector:
-        matchLabels:
-            app: wpe-browser
-    template:
-        metadata:
-            labels:
-                app: wpe-browser
-        spec:
-            containers:
-                - name: browser
-                  image: michalbyrd/wpe:latest
-                  env:
-                  - name: WPE_BCMRPI_CURSOR
-                    value: "1"
-                    name: WPE_URL
-                    value: "https://bouncingdvdlogo.com/"
-                  securityContext:
-                      privileged: true
-            nodeSelector:
-                beta.kubernetes.io/arch: arm
-                kubernetes.io/hostname: k3s-alpha
-            volumes:
-                - name: devices
-                  hostPath:
-                      path: /dev
-                      type: Directory
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wpe-browser
+  template:
+    metadata:
+      labels:
+        app: wpe-browser
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/arch: arm
+        kubernetes.io/hostname: k3s-alpha
+      volumes:
+        - name: inputs
+          hostPath:
+            path: /dev/input
+            type: Directory
+        - name: udev
+          hostPath:
+            path: /run/udev
+            type: Directory
+        - name: browser-state
+          hostPath:
+            path: /home/pi/cog
+            type: DirectoryOrCreate
+      containers:
+        - name: browser
+          image: michalbyrd/wpe:latest
+          env:
+          - name: WPE_URL
+            value: "https://bouncingdvdlogo.com/"
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: inputs
+              mountPath: /dev/input
+            - name: udev
+              mountPath: /run/udev
+            - name: browser-state
+              mountPath: /tmp/balena
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: screen-beta
-    labels:
-        app: wpe-browser
+  name: screen-beta
+  labels:
+    app: wpe-browser
 spec:
-    replicas: 1
-    selector:
-        matchLabels:
-            app: wpe-browser
-    template:
-        metadata:
-            labels:
-                app: wpe-browser
-        spec:
-            containers:
-                - name: browser
-                  image: michalbyrd/wpe:latest
-                  env:
-                  - name: WPE_BCMRPI_CURSOR
-                    value: "1"
-                    name: WPE_URL
-                    value: "https://bouncingdvdlogo.com/"
-                  securityContext:
-                      privileged: true
-            nodeSelector:
-                beta.kubernetes.io/arch: arm
-                kubernetes.io/hostname: k3s-beta
-            volumes:
-                - name: devices
-                  hostPath:
-                      path: /dev
-                      type: Directory
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wpe-browser
+  template:
+    metadata:
+      labels:
+        app: wpe-browser
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/arch: arm
+        kubernetes.io/hostname: k3s-beta
+      volumes:
+        - name: inputs
+          hostPath:
+            path: /dev/input
+            type: Directory
+        - name: udev
+          hostPath:
+            path: /run/udev
+            type: Directory
+        - name: browser-state
+          hostPath:
+            path: /home/pi/cog
+            type: DirectoryOrCreate
+      containers:
+        - name: browser
+          image: michalbyrd/wpe:latest
+          env:
+          - name: WPE_URL
+            value: "https://bouncingdvdlogo.com/"
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: inputs
+              mountPath: /dev/input
+            - name: udev
+              mountPath: /run/udev
+            - name: browser-state
+              mountPath: /tmp/balena
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: screen-gamma
-    labels:
-        app: wpe-browser
+  name: screen-gamma
+  labels:
+    app: wpe-browser
 spec:
-    replicas: 1
-    selector:
-        matchLabels:
-            app: wpe-browser
-    template:
-        metadata:
-            labels:
-                app: wpe-browser
-        spec:
-            containers:
-                - name: browser
-                  image: michalbyrd/wpe:latest
-                  env:
-                  - name: WPE_BCMRPI_CURSOR
-                    value: "1"
-                    name: WPE_URL
-                    value: "https://bouncingdvdlogo.com/"
-                  securityContext:
-                      privileged: true
-            nodeSelector:
-                beta.kubernetes.io/arch: arm
-                kubernetes.io/hostname: k3s-gamma
-            volumes:
-                - name: devices
-                  hostPath:
-                      path: /dev
-                      type: Directory
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wpe-browser
+  template:
+    metadata:
+      labels:
+        app: wpe-browser
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/arch: arm
+        kubernetes.io/hostname: k3s-gamma
+      volumes:
+        - name: inputs
+          hostPath:
+            path: /dev/input
+            type: Directory
+        - name: udev
+          hostPath:
+            path: /run/udev
+            type: Directory
+        - name: browser-state
+          hostPath:
+            path: /home/pi/cog
+            type: DirectoryOrCreate
+      containers:
+        - name: browser
+          image: michalbyrd/wpe:latest
+          env:
+          - name: WPE_URL
+            value: "https://bouncingdvdlogo.com/"
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: inputs
+              mountPath: /dev/input
+            - name: udev
+              mountPath: /run/udev
+            - name: browser-state
+              mountPath: /tmp/balena
